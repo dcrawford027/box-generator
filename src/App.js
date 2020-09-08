@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import BoxForm from './components/BoxForm';
+import BoxDisplay from './components/BoxDisplay';
 
 function App() {
+  const [color, setColor] = useState("");
+  const [allColors, setAllColors] = useState([]);
+
+  const formSubmit = () => {
+    setAllColors([...allColors, color]);
+    setColor('');
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BoxForm color={color} setColor={setColor} formSubmit={formSubmit}/>
+      <div style={{padding:'10px'}}>
+        {
+          allColors.map((col, i) => 
+          <BoxDisplay key={i} color={col}/>
+          )
+        }
+      </div>
     </div>
   );
 }
